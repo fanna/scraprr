@@ -12,7 +12,6 @@ get '/' do
 end
 
 post "/" do
-	puts params[:q]
 	myClr = params[:myColor]
 	myStr = params[:myFinalString]
 	mySpd = params[:mySpeed]
