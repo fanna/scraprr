@@ -5,7 +5,7 @@ require "uri"
 require "rubygems"
 require "rest-client"
 
-set :port, 4567
+#set :port, 4567
 
 get '/' do
  erb :sites
@@ -55,7 +55,7 @@ post "/" do
 end
 
 def to_stream(str) 
-	uri = URI.parse("http://localhost:8989/")
+	uri = URI.parse("http://streamrr.herokuapp.com/")
 	mystr = str
 	# Shortcut
 	response = Net::HTTP.post_form(uri, "q" => mystr)
