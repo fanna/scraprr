@@ -2,6 +2,8 @@ require 'sinatra'
 require 'json'
 require "net/http"
 require "uri"
+require "rubygems"
+require "rest-client"
 
 set :port, 4567
 
@@ -10,7 +12,7 @@ get '/' do
 end
 
 post "/" do
-
+	puts params[:q]
 	myClr = params[:myColor]
 	myStr = params[:myFinalString]
 	mySpd = params[:mySpeed]
@@ -48,4 +50,15 @@ post "/" do
 	end
 
 	puts myStr
+	to_stream(myStr)
+
+
 end
+
+def to_stream(str) 
+	uri = URI.parse("http://localhost:8989/")
+	mystr = str
+	# Shortcut
+	response = Net::HTTP.post_form(uri, "q" => mystr)
+end
+
