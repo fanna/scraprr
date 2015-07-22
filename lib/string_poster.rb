@@ -1,9 +1,31 @@
+require 'byebug'
 class StringPoster
 
-  SERVER_URL = "http://localhost:8989/"
+  def self.push_to_stream(str)
+    return false if invalid_string?(str)
 
-  def self.to_stream(str)
-   	uri = URI.parse(SERVER_URL)
-	 	Net::HTTP.post_form(uri, "q" => str)
+   	uri = URI.parse(server_url)
+    res = Net::HTTP.post_form(uri, "q" => str)
+
+    if res.kind_of? Net::HTTPSuccess
+      true
+    else
+      false
+    end
+    rescue Errno::ECONNREFUSED
+    false
+
   end
+
+  def self.server_url
+    "http://localhost:8989"
+    #----put this before deploying to heroku----
+    #ENV["STREAM_URL"] || "http://localhost:8989"
+    #-------------------------------------------
+  end
+
+  def self.invalid_string?(str)
+    str.empty? ||  str.include?(" ")
+  end
+
 end
